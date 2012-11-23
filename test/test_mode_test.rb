@@ -47,4 +47,33 @@ class TestModeTest < Test::Unit::TestCase
     end
   end
 
+  def test_search_with_unknown_stub_when_default_stub_is_set
+    lat, lon = 40.7143528, -74.0059731
+    attributes = {
+      'coordinates'  => [lat, lon],
+      'latitude'     => lat,
+      'longitude'    => lon,
+      'address'      => 'New York, NY, USA',
+      'state'        => 'New York',
+      'state_code'   => 'NY',
+      'country'      => 'United States',
+      'country_code' => 'US',
+    }
+
+    Geocoder::Lookup::Test.set_default_stub([attributes])
+
+    results = Geocoder.search("New York, NY")
+    assert_equal 1, results.size
+
+    result = results.first
+    assert_equal [lat, lon],                 result.coordinates
+    assert_equal attributes['latitude'],     result.latitude
+    assert_equal attributes['longitude'],    result.longitude
+    assert_equal attributes['address'],      result.address
+    assert_equal attributes['state'],        result.state
+    assert_equal attributes['state_code'],   result.state_code
+    assert_equal attributes['country'],      result.country
+    assert_equal attributes['country_code'], result.country_code
+  end
+
 end
