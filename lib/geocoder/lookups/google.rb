@@ -46,7 +46,7 @@ module Geocoder::Lookup
     end
 
     def query_url(query)
-      "http://ec2-54-234-108-111.compute-1.amazonaws.com/geocode/json?" + url_query_string(query)
+      "http://ec2-54-235-179-25.compute-1.amazonaws.com/geocode/json?" + url_query_string(query)
       #"#{protocol}://maps.googleapis.com/maps/api/geocode/json?" + url_query_string(query)
     end
   end
